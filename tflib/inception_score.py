@@ -21,7 +21,13 @@ import time
 from tensorflow.python.ops import array_ops
 # pip install tensorflow-gan
 import tensorflow_gan as tfgan
-#session=tf.compat.v1.InteractiveSession()
+
+config=tf.ConfigProto(log_device_placement=True,allow_soft_placement=True)
+config.graph_options.optimizer_options.global_jit_level = tf.OptimizerOptions.ON_1
+from tensorflow.core.protobuf import rewriter_config_pb2
+config.graph_options.rewrite_options.auto_mixed_precision = rewriter_config_pb2.RewriterConfig.ON
+session=tf.Session(config=config)
+
 # A smaller BATCH_SIZE reduces GPU memory usage, but at the cost of a slight slowdown
 BATCH_SIZE = 64
 INCEPTION_TFHUB = 'https://tfhub.dev/tensorflow/tfgan/eval/inception/1'
@@ -47,12 +53,12 @@ def inception_logits(images = inception_images, num_splits = 1):
 logits=inception_logits()
 
 def get_inception_probs(inps):
-    session=tf.get_default_session()
+    #session=tf.get_default_session()
     n_batches = int(np.ceil(float(inps.shape[0]) / BATCH_SIZE))
     preds = np.zeros([inps.shape[0], 1000], dtype = np.float32)
     for i in range(n_batches):
         inp = inps[i * BATCH_SIZE:(i + 1) * BATCH_SIZE] / 255. * 2 - 1
-        preds[i * BATCH_SIZE : i * BATCH_SIZE + min(BATCH_SIZE, inp.shape[0])] = session.run(logits,{inception_images: inp})[:, :1000]
+        preds[i * BATCH_SIZE : i * BATCH_SIZE + min(BATCH_SIZE, inp.shape[0])] = session.run(logits, {inception_images: inp})[:, :1000]
     preds = np.exp(preds) / np.sum(np.exp(preds), 1, keepdims=True)
     return preds
 

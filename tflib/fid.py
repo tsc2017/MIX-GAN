@@ -21,7 +21,12 @@ from tensorflow.python.ops import array_ops
 # pip install tensorflow-gan
 import tensorflow_gan as tfgan
 
-#session=tf.compat.v1.InteractiveSession()
+config=tf.ConfigProto(log_device_placement=True,allow_soft_placement=True)
+config.graph_options.optimizer_options.global_jit_level = tf.OptimizerOptions.ON_1
+from tensorflow.core.protobuf import rewriter_config_pb2
+config.graph_options.rewrite_options.auto_mixed_precision = rewriter_config_pb2.RewriterConfig.ON
+session=tf.Session(config=config)
+
 # A smaller BATCH_SIZE reduces GPU memory usage, but at the cost of a slight slowdown
 BATCH_SIZE = 64
 
@@ -56,11 +61,11 @@ def get_inception_activations(inps):
     act = np.zeros([inps.shape[0], 2048], dtype = np.float32)
     for i in range(n_batches):
         inp = inps[i * BATCH_SIZE : (i + 1) * BATCH_SIZE] / 255. * 2 - 1
-        act[i * BATCH_SIZE : i * BATCH_SIZE + min(BATCH_SIZE, inp.shape[0])] = activations.eval(feed_dict = {inception_images: inp})
+        act[i * BATCH_SIZE : i * BATCH_SIZE + min(BATCH_SIZE, inp.shape[0])] = session.run(activations, feed_dict = {inception_images: inp})
     return act
 
 def activations2distance(act1, act2):
-    return fcd.eval(feed_dict = {activations1: act1, activations2: act2})
+    return session.run(fcd, feed_dict = {activations1: act1, activations2: act2})
         
 def get_fid(images1, images2):
     assert(type(images1) == np.ndarray)
