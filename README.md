@@ -12,7 +12,7 @@ This repo implements any method that can match the following regular expression:
 # Free GPU training on Colab
 [![Example In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/tsc2017/MIX-GAN/blob/main/MIX-MHingeGAN-CIFAR-10.ipynb)
 
-This implemetation supports automatic mixed-precision training of TensorFlow, which can reduce GPU memory usage and training time dramatically. Therefore, it is recommended to upgrade to [Colab Pro](https://colab.research.google.com/signup) in order to use GPUs with Tensor Cores. Training MIX-MHingeGAN with 10 generators and 10 discriminators takes only 1.5 days on a Tesla V100.
+This implemetation supports automatic mixed-precision training of TensorFlow, which can reduce GPU memory usage and training time dramatically. Therefore, it is recommended to upgrade to [Colab Pro](https://colab.research.google.com/signup) in order to use GPUs with Tensor Cores. Training `MIX-MHingeGAN` with 10 generators and 10 discriminators takes only 1.5 days on a single Tesla V100.
 # Free TPU training on Colab
 Coming soon...
 # Training on Cloud TPUs
