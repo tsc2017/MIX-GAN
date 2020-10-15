@@ -20,3 +20,22 @@ Coming soon...
 - [Create cloud TPUs](https://cloud.google.com/tpu/docs/creating-deleting-tpus), TPU software version should be at least `2.4.0` or `nightly`.
 - Fill in `TPU_NAMES` and `ZONE` in the  the above notebook for TPUs. Set up environment variables `LOG` and `DATA`, run the notebook.
 - [Delete TPUs](https://cloud.google.com/tpu/docs/creating-deleting-tpus).
+# References
+https://github.com/igul222/improved_wgan_training  
+https://github.com/biuyq/CT-GAN  
+https://github.com/google/compare_gan  
+https://github.com/ajbrock/BigGAN-PyTorch  
+https://github.com/taki0112/BigGAN-Tensorflow  
+https://github.com/brain-research/self-attention-gan  
+https://github.com/ilyakava/BigGAN-PyTorch  
+https://github.com/NVlabs/stylegan2  
+https://github.com/NVlabs/stylegan2-ada  
+# Citation
+```
+@article{tang2020lessons,
+  title={Lessons Learned from the Training of GANs on Artificial Datasets},
+  author={Tang, Shichang},
+  journal={arXiv preprint arXiv:2007.06418},
+  year={2020}
+}
+```
